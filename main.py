@@ -25,9 +25,9 @@ to_user = 'vanessa.rhd', 'lanarohades', 'ladies', 'katekirienko', \
 parser = arg.ArgumentParser(usage='You can choose f and m but its most probably to get a ban account. '
                                   'You can stop process if you want with Ctrl + Shift + C')
 parser.add_argument('f', default=0, help='follow mode (1 true/ 0 false)', type=int)
-parser.add_argument('m', default=0, help='messages mode (1 true/ 0 false', type=int)
-parser.add_argument('s', default=0, help='scrapping on instagram (1 true/ 0 false', type=int)
-parser.add_argument('t', help='be a stalker on instagram (1 true/ 0 false', type=int)
+parser.add_argument('m', default=0, help='messages mode (1 true/ 0 false)', type=int)
+parser.add_argument('s', default=0, help='scrapping on instagram (1 true/ 0 false)', type=int)
+parser.add_argument('t', help='be a stalker on instagram (1 true/ 0 false)', type=int)
 parser.add_argument('-n', default=0, help='configure new accounts (upload photo, video, etc)')
 parser.add_argument('-to', help='user to follow or send dm to his followers', type=str,
                     default=to_user[random.choice(range(0, 6))])
@@ -268,4 +268,3 @@ print(
     Fore.CYAN +
     '\n\t\t\t\tSee you later influencer ;)\n'
 )
-
