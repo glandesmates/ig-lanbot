@@ -20,17 +20,21 @@ class Advertisement:
 
 
 to_user = 'vanessa.rhd', 'lanarohades', 'ladies', 'katekirienko', \
-       'xlightmoon.x', 'arigameplays', 'natalie.tananska'
-random_msg = 'Helloooo', 'follow me honey',\
-             'so cute', 'i love you', 'send me your best >;)'
+          'xlightmoon.x', 'arigameplays', 'natalie.tananska'
 
 parser = arg.ArgumentParser(usage='You can choose f and m but its most probably to get a ban account. '
                                   'You can stop process if you want with Ctrl + Shift + C')
 parser.add_argument('f', default=0, help='follow mode (1 true/ 0 false)', type=int)
 parser.add_argument('m', default=0, help='messages mode (1 true/ 0 false', type=int)
+parser.add_argument('s', default=0, help='scrapping on instagram (1 true/ 0 false', type=int)
+parser.add_argument('t', help='be a stalker on instagram (1 true/ 0 false', type=int)
+parser.add_argument('-n', default=0, help='configure new accounts (upload photo, video, etc)')
 parser.add_argument('-to', help='user to follow or send dm to his followers', type=str,
                     default=to_user[random.choice(range(0, 6))])
+parser.add_argument('-fo', help='max users to get: )', type=int)
 parser.add_argument('-cm', help='custom message', type=str)
+parser.add_argument('--media', help='send photo to users as dm (enter filepath)', type=str)
+parser.add_argument('--profile', help='send a profile to users as dm')
 parser.add_argument('-os', default=0, help="""operative system:
                                     [1] windows
                                     [2] macos
@@ -73,119 +77,166 @@ print('\n' + Advertisement.warning + Fore.CYAN +
 user = input(Advertisement.step + Fore.WHITE + '\tUsername: ')
 pwd = input(Advertisement.step + Fore.WHITE + '\tPassword: ')
 print('\n')
-bot.login(username=user, password=pwd)
+try:
+    bot.login(username=user, password=pwd)
+except Exception as e:
+    print(f'\tCan not login with {user} for cause:\n {e}')
 
-if args.f == 1 and args.m == 0:
-    id_victim = bot.get_user_id_from_username(args.to)
-    if args.to:
-        print('\n')
-        try:
-            bot.follow_followers(
-                id_victim, nfollows=int(input(
-                    '\tMax follows: '
-                ))
-            )
-        except KeyboardInterrupt or Exception as e:
-            if e is True:
-                print(f'Error: {e}')
-            else:
-                print('\n\t\t' + Advertisement.warning + Fore.RED + 'Process interrupted by user')
+if args.to == 1:
+    her_user = args.to
+else:
+    her_user = random.choice(to_user)
+
+
+def user_or_error(error):
+    if error is True:
+        print(e)
     else:
-        print('\n')
-        id_victim = bot.get_user_id_from_username(
-            random.choice(to_user)
-        )
         print(
-              '\n' + Advertisement.message +
-              Fore.LIGHTGREEN_EX + 'Followers from user: ' +
-              str(
-                bot.get_username_from_user_id(
-                    id_victim
-                )
-              )
+            '\n\t\t' + Advertisement.warning + Fore.RED + 'Process interrupted by user'
         )
-        print('\n')
-        try:
-            bot.follow_followers(
-                id_victim, nfollows=int(input(
-                    '\tMax follows: '
-                ))
-            )
-        except KeyboardInterrupt or Exception as e:
-            if e is True:
-                print(f'Error: {e}')
-            else:
-                print('\n\t\t' + Advertisement.warning + Fore.RED + 'Process interrupted by user')
-    bot.unfollow_non_followers()
 
-elif args.m == 1 and args.f == 0:
-    if args.to:
-        id_victim = bot.get_user_id_from_username(args.to)
-        followers = bot.get_user_followers(id_victim, nfollows=int(input(f'\tGet custom users list from {args.to}: ')))
-        if args.cm:
-            try:
-                bot.send_messages(followers, args.cm)
-            except KeyboardInterrupt or Exception as e:
-                if e is True:
-                    print(f'Error: {e}')
-                else:
-                    print('\n\t\t' + Advertisement.warning + Fore.RED + 'Process interrupted by user')
+
+def load_archives(load, pic):
+    try:
+        load
+    except Exception as e:
+        if e is True:
+            raise e
         else:
-            try:
-                bot.send_messages(followers, random.choice(random_msg))
-            except KeyboardInterrupt or Exception as e:
-                if e is True:
-                    print(f'Error: {e}')
-                else:
-                    print('\n\t\t' + Advertisement.warning + Fore.RED + 'Process interrupted by user')
+            print(f'\tFile does not exist {pic}')
+
+
+if args.n:
+    print("""
+    You select the mode -n,
+    what do you want to do?:
+    ----------------------
+    {0} Profile picture
+    {1} Upload photo
+    {2} Upload video
+    {3} Upload story photo
+    {4} All
+    ----------------------
+          """)
+    uploader = int(input('\t\t'))
+    if uploader == 1:
+        pic_upl = input('\tPhoto path: ')
+        load_archives(bot.upload_photo(pic_upl), pic_upl)
+    elif uploader == 2:
+        vid_upl = input('\tVideo path: ')
+        load_archives(bot.upload_video(vid_upl), vid_upl)
+    elif uploader == 3:
+        story_pic = input('\tStory photo path: ')
+        load_archives(bot.upload_story_photo(story_pic), story_pic)
+    elif uploader == 0:
+        prof_pic = input('\tProfile picture path: ')
+        load_archives(bot.api.configure_photo(prof_pic), prof_pic)
+    elif uploader == 4:
+        pic_upl = input('\tPhoto path: ')
+        vid_upl = input('\tVideo path: ')
+        story_pic = input('\tStory photo path: ')
+        prof_pic = input('\tProfile picture path: ')
+        load_archives(bot.upload_photo(pic_upl), pic_upl)
+        load_archives(bot.upload_video(vid_upl), vid_upl)
+        load_archives(bot.upload_story_photo(story_pic), story_pic)
+        load_archives(bot.api.configure_photo(prof_pic), prof_pic)
     else:
-        id_victim = bot.get_user_id_from_username(
-            random.choice(to_user)
-        )
-        print(
-            '\n' + Advertisement.message +
-            Fore.LIGHTGREEN_EX + 'Followers from user: ' +
-            str(
-                bot.get_username_from_user_id(
-                    id_victim
-                )
-            )
-        )
-        followers = bot.get_user_followers(id_victim, nfollows=int(input(f'\tGet custom users list from {args.to}: ')))
-        if args.cm:
-            try:
-                bot.send_messages(
-                    followers,
-                    args.cm
-                )
-            except KeyboardInterrupt or Exception as e:
-                if e is True:
-                    print(f'Error: {e}')
-                else:
-                    print('\n\t\t' + Advertisement.warning + Fore.RED + 'Process interrupted by user')
-        else:
-            try:
-                bot.send_messages(followers, random.choice(random_msg))
-            except KeyboardInterrupt or Exception as e:
-                if e is True:
-                    print(f'Error: {e}')
-                else:
-                    print('\n\t\t' + Advertisement.warning + Fore.RED + 'Process interrupted by user')
+        pass
+else:
+    pass
 
-elif args.f == args.m:
-    if args.to and not args.cm:
-        MaxUsersFromVictim = int(input(f'\tGet followers from {args.to}: '))
-        id_victim = bot.get_user_id_from_username(args.to)
-        followers = list(bot.get_user_followers(id_victim, nfollows=MaxUsersFromVictim))
-        for each_follower in followers:
-            try:
-                bot.follow(each_follower)
-                bot.send_message(random.choice(random_msg), each_follower)
-            except KeyboardInterrupt or Exception as e:
-                if e is True:
-                    print(f'Error: {e}')
-                else:
-                    print('\n\t\t' + Advertisement.warning + Fore.RED + 'Process interrupted by user')
+if args.m == 1:
+    id_user = bot.get_user_id_from_username(her_user)
+    if args.fo:
+        followers = bot.get_user_followers(id_user, args.fo)
+    else:
+        followers = bot.get_user_followers(id_user)
+    for each_user in followers:
+        try:
+            bot.send_messages(user_ids=each_user, text=args.cm)
+            if args.media:
+                bot.send_photo(her_user, args.media)
+            else:
+                pass
+            if args.profile:
+                id_prof = bot.get_user_id_from_username(args.profile)
+                bot.send_profile(id_prof, her_user)
+            else:
+                pass
+        except KeyboardInterrupt or Exception as e:
+            user_or_error(e)
+elif args.cm == args.to:
+    id_user = bot.get_user_id_from_username(her_user)
+    if args.fo:
+        followers = bot.get_user_followers(id_user, args.fo)
+    else:
+        followers = bot.get_user_followers(id_user)
+    try:
+        for each_user in followers:
+            bot.follow(each_user)
+            bot.send_message(args.cm, each_user)
+            if args.media:
+                bot.send_photo(her_user, args.media)
+            else:
+                pass
+            if args.profile:
+                id_prof = bot.get_user_id_from_username(args.profile)
+                bot.send_profile(id_prof, her_user)
+            else:
+                pass
+            if args.media:
+                bot.send_photo(her_user, args.media)
+            else:
+                pass
+            if args.profile:
+                id_prof = bot.get_user_id_from_username(args.profile)
+                bot.send_profile(id_prof, her_user)
+            else:
+                pass
+    except KeyboardInterrupt or Exception as e:
+        user_or_error(e)
+if args.s == 1:
+    print(f"""
+    [1] Get messages from {user}
+    [2] Get followers info from {her_user}
+    Coming soon...
+    --------------------------------------
+    """)
+    scraper = int(input('\t\t'))
+    if scraper == 1:
+        bot.get_messages()
+    elif scraper == 2:
+        id_user = bot.get_user_followers(her_user)
+        if args.fo:
+            followers = bot.get_user_followers(id_user, args.fo)
+        else:
+            followers = bot.get_user_followers(id_user)
+        count = 0
+        for users_info in followers:
+            print(bot.get_user_info(users_info))
+            count += 1
+            if count == args.fo:
+                print('\tUsers information process finished...')
+                break
+if args.to == 1:
+    print(f"""
+    [1] Send likes to followers from {her_user}
+    Coming soon...
+    -------------------------------------------
+    """)
+    stalker = int(input('\t\t'))
+    if stalker == 1:
+        if args.to == 1 and args.fo:
+            count = 0
+            id_user = bot.get_user_id_from_username(her_user)
+            followers = bot.get_user_followers(id_user, args.fo)
+            for each_user in followers:
+                bot.like_user(each_user)
+                count += 1
+                if count == args.fo:
+                    break
+bot.logout()
 
 
 def writer(text, time):
@@ -217,3 +268,4 @@ print(
     Fore.CYAN +
     '\n\t\t\t\tSee you later influencer ;)\n'
 )
+
