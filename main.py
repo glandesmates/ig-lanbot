@@ -87,7 +87,7 @@ banner1 = """
 print('\n\n')
 colors = Fore.LIGHTBLUE_EX, Fore.BLUE, Fore.CYAN, Fore.LIGHTMAGENTA_EX
 for banner in banner1:
-    print(random.choice(colors) + banner, end='')in.py
+    print(random.choice(colors) + banner, end='')
     sys.stdout.flush()
     sleep(0)
 
