@@ -19,7 +19,7 @@ class Advertisement:
     information = Fore.LIGHTYELLOW_EX + '<' + Fore.LIGHTBLACK_EX + 'data' + Fore.LIGHTYELLOW_EX + '> '
     end = Fore.LIGHTYELLOW_EX + '/' + Fore.LIGHTBLACK_EX + '>' + '/ '
     suggest = Fore.BLUE + '*' + Fore.LIGHTBLUE_EX + '> '
-    step = Fore.LIGHTBLUE_EX + '<' + Fore.LIGHTBLACK_EX in.py+ '!' + Fore.LIGHTBLUE_EX + '> '
+    step = Fore.LIGHTBLUE_EX + '<' + Fore.LIGHTBLACK_EX + '!' + Fore.LIGHTBLUE_EX + '> '
 
 
 parser = arg.ArgumentParser()
