@@ -19,7 +19,7 @@ class Advertisement:
     information = Fore.LIGHTYELLOW_EX + '<' + Fore.LIGHTBLACK_EX + 'data' + Fore.LIGHTYELLOW_EX + '> '
     end = Fore.LIGHTYELLOW_EX + '/' + Fore.LIGHTBLACK_EX + '>' + '/ '
     suggest = Fore.BLUE + '*' + Fore.LIGHTBLUE_EX + '> '
-    step = Fore.LIGHTBLUE_EX + '<' + Fore.LIGHTBLACK_EX + '!' + Fore.LIGHTBLUE_EX + '> '
+    step = Fore.LIGHTBLUE_EX + '<' + Fore.LIGHTBLACK_EX in.py+ '!' + Fore.LIGHTBLUE_EX + '> '
 
 
 parser = arg.ArgumentParser()
@@ -33,31 +33,26 @@ positional.add_argument('user', help='[your victim here]',type=str)
 
 df = parser.add_argument_group(' GETTER')
 
-df.add_argument('-fol', help='[user to follow his followers]', type=str)
+df.add_argument('-fol', help='[user to follow his followers]', action='store_true')
 df.add_argument('-msg', help='[your message here (send to all followers user)]', type=str)
-df.add_argument('--getinfo', help='[get information of followers user]', type=bool)
+df.add_argument('--getinfo', help='[get information of followers user]', action='store_true')
 df.add_argument('--media', help='[send pic as dm (filepath here)]', type=str)
 df.add_argument('--sendprof', help='[send profile (enter profile to send)]', type=str)
 
-hnt = parser.add_argument_group(' HUNTER')
+hnt = parser.add_argument_group(' HUNTER')in.py
 hnt.add_argument('-dm', help='[send massive dm´s to user victim (your message here)]', type=str)
 
 crk = parser.add_argument_group('  CRACK')
 crk.add_argument('-file', help='[file with passwords here]', type=str)
 
 args = parser.parse_args()
-
+in.py
 _victim_ = args.user
 limit = args.max
 
 def clean():
-    try:
-        try:
-            os.system('cls')
-        except:
-            os.system('clear')
-    except:
-        pass
+    os.system(['clear', 'cls'][os.name == 'nt']
+
 clean()
 
 banner1 = """
@@ -76,7 +71,7 @@ banner1 = """
 print('\n\n')
 colors = Fore.LIGHTBLUE_EX, Fore.BLUE, Fore.CYAN, Fore.LIGHTMAGENTA_EX
 for banner in banner1:
-    print(random.choice(colors) + banner, end='')
+    print(random.choice(colors) + banner, end='')in.py
     sys.stdout.flush()
     sleep(0)
 
@@ -135,7 +130,7 @@ if args.file:
     except KeyboardInterrupt or Exception as e:
         if e is False:
             print('The user breaks the script')
-        else:
+        else:in.py
             print(f'File {args.file} does not exists')
             raise e
     exit()        
