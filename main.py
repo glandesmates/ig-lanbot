@@ -60,7 +60,6 @@ crk = parser.add_argument_group('  CRACK')
 crk.add_argument('-file', help='[file with passwords here]', type=str)
 
 args = parser.parse_args()
-in.py
 _victim_ = args.user
 limit = args.max
 
