@@ -53,7 +53,7 @@ df.add_argument('--getinfo', help='[get information of followers user]', action=
 df.add_argument('--media', help='[send pic as dm (filepath here)]', type=str)
 df.add_argument('--sendprof', help='[send profile (enter profile to send)]', type=str)
 
-hnt = parser.add_argument_group(' HUNTER')in.py
+hnt = parser.add_argument_group(' HUNTER')
 hnt.add_argument('-dm', help='[send massive dm´s to user victim (your message here)]', type=str)
 
 crk = parser.add_argument_group('  CRACK')
