@@ -60,11 +60,14 @@ crk = parser.add_argument_group('  CRACK')
 crk.add_argument('-file', help='[file with passwords here]', type=str)
 
 args = parser.parse_args()
+
+
+
 _victim_ = args.user
 limit = args.max
 
 def clean():
-    os.system(['clear', 'cls'][os.name == 'nt']
+    os.system(['clear', 'cls'][os.name == 'nt'])
 
 clean()
 
