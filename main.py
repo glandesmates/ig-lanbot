@@ -7,10 +7,6 @@ import os
 import sys
 import random
 try:
-@glandesmates
-glandesmates Update main.py
-Latest commit 3a92ef6 now
-History 
     import argparse as arg
 except:
     notInstalled('argparse')
