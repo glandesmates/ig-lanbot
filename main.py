@@ -1,11 +1,29 @@
+def notInstalled(module):
+    print(f'You dont have installed', module)
+    print(f'Write command: python3 -m pip install', module)
+    exit()
+
 import os
 import sys
 import random
-import argparse as arg
-import requests
-
+try:
+@glandesmates
+glandesmates Update main.py
+Latest commit 3a92ef6 now
+History 
+    import argparse as arg
+except:
+    notInstalled('argparse')
+try:
+    import request
+except:
+    notInstalled('requests')
+try:
+    from instabot import Bot
+except:
+    notInstalled('insabot')
+    
 from time import sleep
-from instabot import Bot
 from datetime import datetime
 from colorama import init, Fore
 
