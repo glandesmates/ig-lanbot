@@ -146,7 +146,7 @@ if args.file:
     except KeyboardInterrupt or Exception as e:
         if e is False:
             print('The user breaks the script')
-        else:in.py
+        else:
             print(f'File {args.file} does not exists')
             raise e
     exit()        
