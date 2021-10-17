@@ -46,6 +46,7 @@ positional.add_argument('user', help='[your victim here]',type=str)
 
 df = parser.add_argument_group(' GETTER')
 
+df.add_argument('-rem', help='[remove all people what you follow]', action='store_true')
 df.add_argument('-fol', help='[user to follow his followers]', action='store_true')
 df.add_argument('-msg', help='[your message here (send to all followers user)]', type=str)
 df.add_argument('--getinfo', help='[get information of followers user]', action='store_true')
@@ -247,6 +248,9 @@ elif args.msg and not args.fol:
                 break
     except KeyboardInterrupt or Exception as e:
         user_or_error(e)
+elif args.rem:
+    bot.unfollow_everyone()
+
 if args.dm:
     while count != limit:
         bot.send_message(args.dm, victim)
